@@ -30,8 +30,18 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', store.home)
+app.get('/', store.home);
+app.post('/', store.home_post_handler);
+// show general pages
+app.get('/page', store.page);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+});
+
+app.get('/logout', function(req, res) {
+    // delete the session variable
+    delete req.session.username;
+    // redirect user to homepage
+    res.redirect('/');
 });
